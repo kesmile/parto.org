@@ -1,0 +1,26 @@
+{
+  "name": "Parto.org",
+  "description": "WebApp parto.org",
+  "main": "",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "rails",
+    "ruby",
+    "bootstrap"
+  ],
+  "authors": [
+    "Kelvi S. Padilla"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ]
+}
