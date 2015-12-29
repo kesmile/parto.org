@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
+
+  get 'login/index'
+  post 'login/validate'
+  get 'login/logout'
+
   get 'home/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
