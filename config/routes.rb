@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'dashboard/index'
-
+  post 'dashboard/add_comadrona'
   get 'login/index'
   post 'login/validate'
   get 'login/logout'

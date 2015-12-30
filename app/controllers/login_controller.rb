@@ -4,7 +4,7 @@ class LoginController < ApplicationController
       redirect_to controller: 'dashboard', action: 'index'
       return
     end
-    render :layout => 'dashboard'
+    render :layout => 'login'
   end
 
   def validate
