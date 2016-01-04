@@ -15,14 +15,18 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav navbar-right">
-        <li></li>
-        <li></li>
-        <li></li>
-          <li>
-              <span class="icon circle-with-plus"></span> New Pin
-          </li>
-        <li></li>
-          <li></li>
+        <li>
+          <%= link_to "Home", :controller => :home, :action => :index %>
+        </li>
+        <li><a href="#">Acerca de nosotros</a></li>
+        <li>
+          <%= link_to "Crear cuenta", :controller => :login, :action => :register %>
+        </li>
+        <li>
+          <%= link_to action: "index", controller: 'login' do %>
+          <i class="fa fa-sign-in"></i> login
+          <% end %>
+        </li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>

@@ -5,8 +5,19 @@
   padding-top: 5% !important;
 }
 .dashboard-container{
-  padding-top: 5%;
-  h1{
+  padding-top: 7%;
+  h1,h2{
     margin-top: 0px;
+  }
+}
+.box{
+  width: 215px;
+  float: left;
+  margin-right: 10%;
+  &:last-child{
+    margin-right: 0%;
+  }
+  img{
+    width: 215px;
   }
 }

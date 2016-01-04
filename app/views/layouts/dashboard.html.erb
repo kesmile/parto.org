@@ -17,72 +17,40 @@
           <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Opciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="themes">
                   <li><a href="../default/">Default</a></li>
                   <li class="divider"></li>
-                  <li><a href="../cerulean/">Cerulean</a></li>
-                  <li><a href="../cosmo/">Cosmo</a></li>
-                  <li><a href="../cyborg/">Cyborg</a></li>
-                  <li><a href="../darkly/">Darkly</a></li>
-                  <li><a href="../flatly/">Flatly</a></li>
-                  <li><a href="../journal/">Journal</a></li>
-                  <li><a href="../lumen/">Lumen</a></li>
-                  <li><a href="../paper/">Paper</a></li>
-                  <li><a href="../readable/">Readable</a></li>
-                  <li><a href="../sandstone/">Sandstone</a></li>
-                  <li><a href="../simplex/">Simplex</a></li>
-                  <li><a href="../slate/">Slate</a></li>
-                  <li><a href="../spacelab/">Spacelab</a></li>
-                  <li><a href="../superhero/">Superhero</a></li>
-                  <li><a href="../united/">United</a></li>
-                  <li><a href="../yeti/">Yeti</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="../help/">Help</a>
-              </li>
-              <li>
-                <a href="http://news.bootswatch.com">Blog</a>
-              </li>
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Flatly <span class="caret"></span></a>
-                <ul class="dropdown-menu" aria-labelledby="download">
-                  <li><a href="http://jsfiddle.net/bootswatch/jmg3gykg/">Open Sandbox</a></li>
-                  <li class="divider"></li>
-                  <li><a href="./bootstrap.min.css">bootstrap.min.css</a></li>
-                  <li><a href="./bootstrap.css">bootstrap.css</a></li>
-                  <li class="divider"></li>
-                  <li><a href="./variables.less">variables.less</a></li>
-                  <li><a href="./bootswatch.less">bootswatch.less</a></li>
-                  <li class="divider"></li>
-                  <li><a href="./_variables.scss">_variables.scss</a></li>
-                  <li><a href="./_bootswatch.scss">_bootswatch.scss</a></li>
                 </ul>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="http://builtwithbootstrap.com/"><i class="fa fa-sign-out"></i> logout</a></li>
+              <li>
+                <%= link_to action: "logout", controller: 'login' do %>
+                      <i class='fa fa-sign-out'></i> logout
+                <% end %>
+                <!-- <a href="http://builtwithbootstrap.com/"> logout</a> -->
+              </li>
             </ul>
           </div>
         </div>
       </div>
       <div class="container dashboard-container">
         <div class="row">
-          <div class="col-md-3">
-            <div class="">
-                <div class="panel-group" id="accordion">
+          <div class="col-xs-3">
+            <div class="list-group table-of-contents">
+              <a class="list-group-item" href="/dashboard/index" ><i class="fa fa-bell-o"></i> Notificaciones</a>
+              <a class="list-group-item" href="/dashboard/lista"><i class="fa fa-female"></i> Lista de Comadronas</a>
+              <a class="list-group-item" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Nueva comadrona</a>
+                <!-- <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">1. What is HTML?</a>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">¿Que es parto.org?</a>
                             </h4>
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse in">
                             <div class="panel-body">
-                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                Aceptar
-                              </button>
                                 <p>HTML stands for HyperText Markup Language. HTML is the main markup language for describing the structure of Web pages. <a href="http://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
                             </div>
                         </div>
@@ -90,12 +58,16 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. What is Bootstrap?</a>
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Comadronas</a>
                             </h4>
                         </div>
                         <div id="collapseTwo" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <p>Bootstrap is a powerful front-end framework for faster and easier web development. It is a collection of CSS and HTML conventions. <a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank">Learn more.</a></p>
+                                  <ul>
+                                    <li>
+                                      <a href="#" data-toggle="modal" data-target="#myModal">Agregar nueva</a>
+                                      </li>
+                                  </ul>
                             </div>
                         </div>
                     </div>
@@ -111,10 +83,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
           </div>
-          <div class="col-md-7">
+          <div class="col-xs-9">
             <%= yield %>
           </div>
         </div>

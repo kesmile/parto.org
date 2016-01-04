@@ -6,7 +6,26 @@ class LoginController < ApplicationController
     end
     render :layout => 'login'
   end
-
+  def register
+    if session[:user_id] != nil
+      redirect_to controller: 'dashboard', action: 'index'
+      return
+    end
+    render :layout => 'login'
+  end
+  def validate_register
+    if request.post?
+       if params[:username] != '' && params[:password] != '' && params[:categoria] != ''
+         @user = User.create(user: params[:username], email: params[:email], password: params[:password],
+                     status: true, categoria: params[:categoria]);
+         session[:user_id] = @user.id
+         redirect_to controller: 'dashboard', action: 'index'
+       else
+         flash[:notice] = 'Campos vacios'
+         redirect_to controller: 'login', action: 'register'
+       end
+    end
+  end
   def validate
     if request.post?
        if params[:username] != '' && params[:password] != ''
@@ -34,6 +53,6 @@ class LoginController < ApplicationController
 
   def logout
     session[:user_id] = nil
-    redirect_to controller: 'login', action: 'index'
+    redirect_to controller: 'home', action: 'index'
   end
 end

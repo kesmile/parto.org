@@ -35,6 +35,7 @@ $(function(){
         $('#save-button').data('status','save').html('Guardar');
         $('#status-save').hide();
         $('#myModal').modal('hide');
+        location.reload();
       }
     });
 })
