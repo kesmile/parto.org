@@ -19,5 +19,6 @@
 
 .rvmrc
 
-/vendor/assets/components
-/config/database.yml
+
+#/vendor/assets/components
+#/config/database.yml
