@@ -50,7 +50,23 @@ class LoginController < ApplicationController
       redirect_to controller: 'login', action: 'index'
     end
   end
-
+  def validate_token
+    if request.post?
+      if params[:token] != ''
+        @comadrona = Comadrona.find_by token: params[:token]
+        if @comadrona != nil
+          msg = { :status => "ok", :message => @comadrona.nombre }
+        else
+          msg = { :status => "error", :message => "token invalido" }
+        end
+      else
+        msg = { :status => "error", :message => "token invalido" }
+      end
+    else
+      msg = { :status => "error", :message => "token invalido" }
+    end
+    render :json => msg
+  end
   def logout
     session[:user_id] = nil
     redirect_to controller: 'home', action: 'index'

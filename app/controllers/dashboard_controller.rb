@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
     render :layout => 'dashboard'
   end
   def index
-    #@comadronas = Comadrona.all;
+    @eventos = Evento.all;
     render :layout => 'dashboard'
   end
   #metodos post y get
@@ -17,6 +17,18 @@ class DashboardController < ApplicationController
         msg = { :status => "ok", :message => "Se ha guardado exitosamente el token es: <b>" + @string + "</b>", :token => @string}
       else
         msg = { :status => "error", :message => "campos vacios"}
+      end
+    render :json => msg
+  end
+  def add_evento
+      if params[:token] != '' && params[:tipo]
+        @comadrona = Comadrona.find_by token: params[:token]
+        if @comadrona != nil
+          Evento.create(tipo: params[:tipo], usuario: @comadrona.nombre ,telefono: @comadrona.telefono,fecha: DateTime.now, status: true)
+          msg = { :status => "ok", :message => "Success!"}
+        end
+      else
+        msg = { :status => "error", :message => "Campos vacios"}
       end
     render :json => msg
   end

@@ -2,10 +2,12 @@ Rails.application.routes.draw do
   get 'dashboard/index'
   get 'dashboard/lista'
   post 'dashboard/add_comadrona'
+  post 'dashboard/add_evento'
   get 'login/index'
   get 'login/register'
   post 'login/validate_register'
   post 'login/validate'
+  post 'login/validate_token'
   get 'login/logout'
 
   get 'home/index'
