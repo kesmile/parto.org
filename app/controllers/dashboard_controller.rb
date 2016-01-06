@@ -21,6 +21,10 @@ class DashboardController < ApplicationController
     render :json => msg
   end
   def add_evento
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
       if params[:token] != '' && params[:tipo]
         @comadrona = Comadrona.find_by token: params[:token]
         if @comadrona != nil
