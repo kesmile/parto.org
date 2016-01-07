@@ -4,7 +4,16 @@
 
   <% @eventos.each_with_index do |c, index| %>
     <div class="box panel panel-default masonry-brick">
-          <a href="#"><img src="https://s3.amazonaws.com/fotoscomadronas/cards+para+website/Delicado.png" alt="Astronauta2"></a>
+        <% if c.tipo == 'hemorragia' %>
+          <a href="#"><img src="https://s3.amazonaws.com/comadronas/hemorragia.png" alt="Astronauta2"></a>
+          <% end %>
+        <% if c.tipo == 'ataques' %>
+          <a href="#"><img src="https://s3.amazonaws.com/comadronas/Ataques-y-convulsiones.png" alt="Astronauta2"></a>
+          <% end %>
+        <% if c.tipo == 'infeccion' %>
+          <a href="#"><img src="https://s3.amazonaws.com/comadronas/infeccion.png" alt="Astronauta2"></a>
+        <% end %>
+
           <div class="panel-body">
             <strong><%= c.usuario %></strong>
             <br>
