@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   require 'securerandom'
   def lista
-    @comadronas = Comadrona.all;
+    @comadronas = Comadrona.where(:categoria => session[:categoria]);
     render :layout => 'dashboard'
   end
   def index
@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
   end
   #metodos post y get
   def get_events
-    @eventos = Evento.all.order(id: :desc);
+    @eventos = Evento.where(:categoria => session[:categoria]).order(id: :desc);
     render :json => @eventos
   end
   def set_event
@@ -23,7 +23,7 @@ class DashboardController < ApplicationController
       if params[:nombre] != '' && params[:direccion] != '' && params[:telefono]
          o = [('a'..'z'), ('1'..'9')].map { |i| i.to_a }.flatten
          @string = (1...6).map { o[rand(o.length)] }.join @string
-        user = Comadrona.create(nombre: params[:nombre], direccion: params[:direccion], telefono: params[:telefono], categoria: 'centro05', token: @string);
+        user = Comadrona.create(nombre: params[:nombre], direccion: params[:direccion], telefono: params[:telefono], categoria: session[:categoria], token: @string);
         msg = { :status => "ok", :message => "Se ha guardado exitosamente el token es: <b>" + @string + "</b>", :token => @string}
       else
         msg = { :status => "error", :message => "campos vacios"}
@@ -38,7 +38,7 @@ class DashboardController < ApplicationController
       if params[:token] != '' && params[:tipo]
         @comadrona = Comadrona.find_by token: params[:token]
         if @comadrona != nil
-          Evento.create(tipo: params[:tipo], usuario: @comadrona.nombre ,telefono: @comadrona.telefono,fecha: DateTime.now, status: true)
+          Evento.create(tipo: params[:tipo], usuario: @comadrona.nombre ,telefono: @comadrona.telefono,fecha: DateTime.now, status: true, categoria: session[:categoria])
           msg = { :status => "ok", :message => "Success!"}
         end
       else

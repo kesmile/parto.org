@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20160106150131) do
     t.string   "telefono"
     t.datetime "fecha"
     t.boolean  "status"
+    t.string   "categoria"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

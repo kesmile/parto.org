@@ -75,28 +75,29 @@ $(function(){
     var timer = setInterval(function(){
       loadEvents();
     },60000);
-    function loadEvents(){
-      if($('#events').length >0 ){
-        $.ajax({
-            url : 'get_events',
-            data : {},
-            type : 'GET',
-            dataType : 'json',
-            success : function(json) {
-              var template = _.template(
-                $('#template-events').html()
-                );
-              $('#events').html(
-                template({ listItems: json})
-              );
-            },
-            error : function(xhr, status) {
-                alert('Error en conexion');
-            },
-            complete : function(xhr, status) {
+});
+//funciones
+function loadEvents(){
+  if($('#events').length >0 ){
+    $.ajax({
+        url : 'get_events',
+        data : {},
+        type : 'GET',
+        dataType : 'json',
+        success : function(json) {
+          var template = _.template(
+            $('#template-events').html()
+            );
+          $('#events').html(
+            template({ listItems: json})
+          );
+        },
+        error : function(xhr, status) {
+            alert('Error en conexion');
+        },
+        complete : function(xhr, status) {
 
-            }
-        });
-      }
-    }
-})
+        }
+    });
+  }
+}

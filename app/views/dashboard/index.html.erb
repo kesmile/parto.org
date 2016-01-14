@@ -3,6 +3,9 @@
 <div id="events" class="">
 
 </div>
+<script type="text/javascript">
+  loadEvents()
+</script>
 <script type="text/template" id="template-events">
   {{ _.each( listItems, function( l ){ }}
       <div data-id="{{= l.id}}" class="box panel {{ if(l.status == true){ print('box-danger') } }} masonry-brick">
@@ -16,18 +19,20 @@
 
             <div class="panel-body">
               {{ if(l.status == true){ }}
-                <span class="label label-danger blink_me">Danger</span>
+                <span class="label label-danger blink_me">Emergencia</span>
               {{ }else{ }}
-                <span class="label label-success">Success</span>
+                <span class="label label-success">Gestionada</span>
               {{ } }}
               </br>
               <strong>{{= l.usuario }}</strong>
               <br>
-              {{= l.telefono }}
+              <b>Tel: </b>{{= l.telefono }}
               <br>
-              {{= l.fecha }}
+              <b>Fecha ingreso: </b><br> {{= l.fecha }}
               <br>
-              {{= l.tipo }}
+              <b>Fecha gestion: </b><br> {{= l.updated_at }}
+              <br>
+              <b>Tipo: </b>{{= l.tipo }}
               <br>
             </div>
       </div>

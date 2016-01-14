@@ -19,6 +19,7 @@ class LoginController < ApplicationController
          @user = User.create(user: params[:username], email: params[:email], password: params[:password],
                      status: true, categoria: params[:categoria]);
          session[:user_id] = @user.id
+         session[:categoria] = @user.categoria
          redirect_to controller: 'dashboard', action: 'index'
        else
          flash[:notice] = 'Campos vacios'
@@ -33,6 +34,7 @@ class LoginController < ApplicationController
          if @user != nil
            if @user.password == params[:password]
              session[:user_id] = @user.id
+             session[:categoria] = @user.categoria
              redirect_to controller: 'dashboard', action: 'index'
            else
              flash[:notice] = 'Contraseña incorrecta!'

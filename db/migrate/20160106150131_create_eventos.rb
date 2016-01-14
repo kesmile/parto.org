@@ -6,7 +6,8 @@ class CreateEventos < ActiveRecord::Migration
       t.string :telefono
       t.timestamp :fecha
       t.boolean :status
-
+      t.string :categoria
+      
       t.timestamps null: false
     end
   end
