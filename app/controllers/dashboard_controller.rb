@@ -5,10 +5,14 @@ class DashboardController < ApplicationController
     render :layout => 'dashboard'
   end
   def index
-    @eventos = Evento.all;
+    @eventos = Evento.all.order(id: :desc);
     render :layout => 'dashboard'
   end
   #metodos post y get
+  def get_events
+    @eventos = Evento.all.order(id: :desc);
+    render :json => @eventos
+  end
   def add_comadrona
       if params[:nombre] != '' && params[:direccion] != '' && params[:telefono]
          o = [('a'..'z'), ('1'..'9')].map { |i| i.to_a }.flatten

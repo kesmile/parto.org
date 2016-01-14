@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'dashboard/index'
   get 'dashboard/lista'
+  get 'dashboard/get_events'
   post 'dashboard/add_comadrona'
   post 'dashboard/add_evento'
   get 'login/index'

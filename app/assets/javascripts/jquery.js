@@ -1,5 +1,9 @@
 
 $(function(){
+    _.templateSettings = {
+        interpolate: /\{\{\=(.+?)\}\}/g,
+        evaluate: /\{\{(.+?)\}\}/g
+      };
     $('body').on('click','#save-button',function(){
       if($(this).data('status') == 'save'){
         $.ajax({
@@ -38,4 +42,27 @@ $(function(){
         location.reload();
       }
     });
+    $( window ).load(loadEvents());
+    function loadEvents(){
+      $.ajax({
+          url : 'get_events',
+          data : {},
+          type : 'GET',
+          dataType : 'json',
+          success : function(json) {
+            var template = _.template(
+              $('#template-events').html()
+              );
+            $('#events').html(
+              template({ listItems: json})
+            );
+          },
+          error : function(xhr, status) {
+              alert('Error en conexion');
+          },
+          complete : function(xhr, status) {
+
+          }
+      });
+    }
 })

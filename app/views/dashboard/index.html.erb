@@ -1,34 +1,29 @@
 <h2>Eventos</h2>
 <hr>
-<div class="">
+<div id="events" class="">
 
-  <% @eventos.each_with_index do |c, index| %>
-    <div class="box panel panel-default masonry-brick">
-        <% if c.tipo == 'hemorragia' %>
-          <a href="#"><img src="https://s3.amazonaws.com/comadronas/hemorragia.png" alt="Astronauta2"></a>
-          <% end %>
-        <% if c.tipo == 'ataques' %>
-          <a href="#"><img src="https://s3.amazonaws.com/comadronas/Ataques-y-convulsiones.png" alt="Astronauta2"></a>
-          <% end %>
-        <% if c.tipo == 'infeccion' %>
-          <a href="#"><img src="https://s3.amazonaws.com/comadronas/infeccion.png" alt="Astronauta2"></a>
-        <% end %>
-
-          <div class="panel-body">
-            <strong><%= c.usuario %></strong>
-            <br>
-            <%= c.telefono %>
-            <br>
-            <%= c.fecha %>
-            <br>
-            <%= c.tipo %>
-            <br>
-          </div>
-    </div>
-  <% end %>
 </div>
-<script type="text/javascript">
-setInterval(function(){
-  location.reload();
-}, 10000);
+<script type="text/template" id="template-events">
+  {{ _.each( listItems, function( l ){ }}
+      <div class="box panel panel-default masonry-brick">
+          {{ if (l.tipo == 'hemorragia'){ }}
+            <a href="#"><img src="https://s3.amazonaws.com/comadronas/hemorragia.png" alt="Astronauta2"></a>
+          {{ } else if( l.tipo == 'ataques'){ }}
+            <a href="#"><img src="https://s3.amazonaws.com/comadronas/Ataques-y-convulsiones.png" alt="Astronauta2"></a>
+          {{ } else if( l.tipo == 'infeccion'){ }}
+            <a href="#"><img src="https://s3.amazonaws.com/comadronas/infeccion.png" alt="Astronauta2"></a>
+          {{ } }}
+
+            <div class="panel-body">
+              <strong>{{= l.usuario }}</strong>
+              <br>
+              {{= l.telefono }}
+              <br>
+              {{= l.fecha }}
+              <br>
+              {{= l.tipo }}
+              <br>
+            </div>
+      </div>
+  {{ }); }}
 </script>
