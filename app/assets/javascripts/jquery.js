@@ -42,20 +42,25 @@ $(function(){
         location.reload();
       }
     });
-    $( window ).load(loadEvents());
-    function loadEvents(){
+    $( '#events' ).load(loadEvents());
+    //eventos
+    $('body').on('click','.box-danger',function(){
+      $('#save-button-confirm').data('id',$(this).data('id'));
+      $('#confirmModal').modal('show');
+    });
+    $('body').on('click','#save-button-confirm',function(){
+      var id = $(this).data('id');
       $.ajax({
-          url : 'get_events',
-          data : {},
-          type : 'GET',
+          url : 'set_event',
+          data : {id: id},
+          type : 'POST',
           dataType : 'json',
           success : function(json) {
-            var template = _.template(
-              $('#template-events').html()
-              );
-            $('#events').html(
-              template({ listItems: json})
-            );
+            if(json.status != true){
+              alert('Error en conexion');
+            }else{
+              loadEvents()
+            }
           },
           error : function(xhr, status) {
               alert('Error en conexion');
@@ -64,5 +69,34 @@ $(function(){
 
           }
       });
+      $('#confirmModal').modal('hide');
+    });
+
+    var timer = setInterval(function(){
+      loadEvents();
+    },60000);
+    function loadEvents(){
+      if($('#events').length >0 ){
+        $.ajax({
+            url : 'get_events',
+            data : {},
+            type : 'GET',
+            dataType : 'json',
+            success : function(json) {
+              var template = _.template(
+                $('#template-events').html()
+                );
+              $('#events').html(
+                template({ listItems: json})
+              );
+            },
+            error : function(xhr, status) {
+                alert('Error en conexion');
+            },
+            complete : function(xhr, status) {
+
+            }
+        });
+      }
     }
 })

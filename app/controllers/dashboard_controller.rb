@@ -13,6 +13,12 @@ class DashboardController < ApplicationController
     @eventos = Evento.all.order(id: :desc);
     render :json => @eventos
   end
+  def set_event
+    if params[:id] != ''
+      Evento.find_by_id(params[:id]).update_attribute(:status, false)
+    end
+    render :json => msj = { :status => true, :message => 'ok'}
+  end
   def add_comadrona
       if params[:nombre] != '' && params[:direccion] != '' && params[:telefono]
          o = [('a'..'z'), ('1'..'9')].map { |i| i.to_a }.flatten

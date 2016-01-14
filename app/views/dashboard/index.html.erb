@@ -5,7 +5,7 @@
 </div>
 <script type="text/template" id="template-events">
   {{ _.each( listItems, function( l ){ }}
-      <div class="box panel panel-default masonry-brick">
+      <div data-id="{{= l.id}}" class="box panel {{ if(l.status == true){ print('box-danger') } }} masonry-brick">
           {{ if (l.tipo == 'hemorragia'){ }}
             <a href="#"><img src="https://s3.amazonaws.com/comadronas/hemorragia.png" alt="Astronauta2"></a>
           {{ } else if( l.tipo == 'ataques'){ }}
@@ -15,6 +15,12 @@
           {{ } }}
 
             <div class="panel-body">
+              {{ if(l.status == true){ }}
+                <span class="label label-danger blink_me">Danger</span>
+              {{ }else{ }}
+                <span class="label label-success">Success</span>
+              {{ } }}
+              </br>
               <strong>{{= l.usuario }}</strong>
               <br>
               {{= l.telefono }}
