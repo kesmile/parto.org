@@ -5,6 +5,7 @@ class DashboardController < ApplicationController
     render :layout => 'dashboard'
   end
   def index
+    @s = session[:categoria];
     @eventos = Evento.all.order(id: :desc);
     render :layout => 'dashboard'
   end
@@ -24,7 +25,7 @@ class DashboardController < ApplicationController
          o = [('a'..'z'), ('1'..'9')].map { |i| i.to_a }.flatten
          @string = (1...6).map { o[rand(o.length)] }.join @string
         user = Comadrona.create(nombre: params[:nombre], direccion: params[:direccion], telefono: params[:telefono], categoria: session[:categoria], token: @string);
-        msg = { :status => "ok", :message => "Se ha guardado exitosamente el token es: <b>" + @string + "</b>", :token => @string}
+        msg = { :status => "ok", :message => " Se ha guardado exitosamente el token es: <b>" + @string + "</b>", :token => @string}
       else
         msg = { :status => "error", :message => "campos vacios"}
       end
