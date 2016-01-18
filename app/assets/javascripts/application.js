@@ -15,3 +15,5 @@
 //= require_tree .
 //= require bootstrap/dist/js/bootstrap
 //= require underscore/underscore
+//= require moment/min/moment.min
+//= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min

@@ -11,6 +11,12 @@ class DashboardController < ApplicationController
   end
   #metodos post y get
   def get_events
+    # if params[:fecha] != nil && params[:nombre] != nil
+    #   @eventos = Evento.where(:categoria => session[:categoria]).order(id: :desc);
+    # else if params[:fecha] != nil
+    # else if params[:nombre] != nil
+    # else
+    # end
     @eventos = Evento.where(:categoria => session[:categoria]).order(id: :desc);
     render :json => @eventos
   end
@@ -39,7 +45,7 @@ class DashboardController < ApplicationController
       if params[:token] != '' && params[:tipo]
         @comadrona = Comadrona.find_by token: params[:token]
         if @comadrona != nil
-          Evento.create(tipo: params[:tipo], usuario: @comadrona.nombre ,telefono: @comadrona.telefono,fecha: DateTime.now, status: true, categoria: session[:categoria])
+          Evento.create(tipo: params[:tipo], usuario: @comadrona.nombre ,telefono: @comadrona.telefono,fecha: DateTime.now, status: true, categoria: @comadrona.categoria)
           msg = { :status => "ok", :message => "Success!"}
         end
       else

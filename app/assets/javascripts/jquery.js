@@ -4,6 +4,7 @@ $(document).ready(function(){
       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
     }
   });
+  $('#search').datetimepicker();
   _.templateSettings = {
       interpolate: /\{\{\=(.+?)\}\}/g,
       evaluate: /\{\{(.+?)\}\}/g
@@ -61,13 +62,13 @@ $(document).ready(function(){
         dataType : 'json',
         success : function(json) {
           if(json.status != true){
-            alert('Error en conexion');
+            console.log('Error en conexion');
           }else{
             loadEvents()
           }
         },
         error : function(xhr, status) {
-            alert('Error en conexion');
+            console.log('Error en conexion');
         },
         complete : function(xhr, status) {
 
@@ -97,7 +98,7 @@ function loadEvents(){
           );
         },
         error : function(xhr, status) {
-            alert('Error en conexion');
+            console.log('Error en conexion');
         },
         complete : function(xhr, status) {
 
