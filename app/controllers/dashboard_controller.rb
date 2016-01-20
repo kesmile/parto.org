@@ -11,13 +11,18 @@ class DashboardController < ApplicationController
   end
   #metodos post y get
   def get_events
-    # if params[:fecha] != nil && params[:nombre] != nil
-    #   @eventos = Evento.where(:categoria => session[:categoria]).order(id: :desc);
-    # else if params[:fecha] != nil
-    # else if params[:nombre] != nil
-    # else
-    # end
-    @eventos = Evento.where(:categoria => session[:categoria]).order(id: :desc);
+    if params[:nombre] != nil
+      @e = Evento.where("categoria = ? and usuario LIKE ?", "#{session[:categoria]}", "%#{params[:nombre]}%").order(id: :desc);
+    else
+      @e = Evento.where(:categoria => session[:categoria]).order(id: :desc);
+    end
+    @eventos = []
+
+    @e.each do |e|
+      obj = {:tipo => e.tipo,:status => e.status, :usuario => e.usuario,
+             :telefono => e.telefono,:fecha => e.fecha.strftime("%D - %H:%M:%S"), :updated_at => e.updated_at.strftime("%D - %H:%M:%S")}
+      @eventos.push(obj);
+    end
     render :json => @eventos
   end
   def set_event

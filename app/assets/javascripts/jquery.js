@@ -1,3 +1,4 @@
+var params = {};
 $(document).ready(function(){
   $.ajaxSetup({
     beforeSend: function(xhr) {
@@ -47,8 +48,16 @@ $(document).ready(function(){
       location.reload();
     }
   });
-  $( '#events' ).load(loadEvents());
+  $( '#events' ).load(loadEvents(params));
   //eventos
+  $('#search-btn').click(function(e){
+    params = {
+      nombre: $('#name').val()
+    };
+    loadEvents(params);
+    e.preventDefault();
+    console.log('work');
+  });
   $('body').on('click','.box-danger',function(){
     $('#save-button-confirm').data('id',$(this).data('id'));
     $('#confirmModal').modal('show');
@@ -78,15 +87,15 @@ $(document).ready(function(){
   });
 
   var timer = setInterval(function(){
-    loadEvents();
+    loadEvents(params);
   },60000);
 });
 //funciones
-function loadEvents(){
+function loadEvents(params){
   if($('#events').length >0 ){
     $.ajax({
         url : 'get_events',
-        data : {},
+        data : params,
         type : 'GET',
         dataType : 'json',
         success : function(json) {
