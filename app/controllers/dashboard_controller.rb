@@ -24,7 +24,7 @@ class DashboardController < ApplicationController
         tipo = 'Hemorragia mucha sangre!!'
       elsif e.tipo == 'hemorragia-necesito-ayuda'
         tipo = 'Hemorragia necesito ayuda!!'
-      elseif e.tipo == 'hemorragia-placenta'
+      elsif e.tipo == 'hemorragia-placenta'
         tipo = 'Hemorragia placenta no sale!!'
       else
         tipo = e.tipo
