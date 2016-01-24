@@ -1,4 +1,5 @@
 var params = {};
+var _table = {};
 $(document).ready(function(){
   $.ajaxSetup({
     beforeSend: function(xhr) {
@@ -48,19 +49,46 @@ $(document).ready(function(){
       location.reload();
     }
   });
-  $( '#events' ).load(loadEvents(params));
+  _table = $('#datatable').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+          'copy', 'excel'
+      ],
+      ajax: 'get_events',
+      columns: [
+        { data: null,
+          render: function(data, type, row){
+            if(data['status'] == true){
+              return "<span class='label label-danger blink_me'>Emergencia</span>";
+            }else{
+              return "<span class='label label-success'>Gestionada</span>";
+            }
+          }
+        },
+        {data: 'usuario'},
+        {data: 'telefono'},
+        {data: 'tipo'},
+        {data: 'fecha'},
+        {data: 'updated_at'},
+        { data: null,
+          width: '5%',
+          render: function(data, type, row){
+            if(data['status'] == true){
+              return '<input data-id="'+ data['id']+'" class="change-status" type="checkbox">';
+            }else{
+              return '<input type="checkbox" disabled checked>';
+            }
+          }
+        }
+      ]
+
+    });
   //eventos
-  $('#search-btn').click(function(e){
-    params = {
-      nombre: $('#name').val()
-    };
-    loadEvents(params);
-    e.preventDefault();
-    console.log('work');
-  });
-  $('body').on('click','.box-danger',function(){
-    $('#save-button-confirm').data('id',$(this).data('id'));
-    $('#confirmModal').modal('show');
+  $('body').on('change','.change-status',function(){
+    if($(this).is(":checked")){
+      $('#save-button-confirm').data('id',$(this).data('id'));
+      $('#confirmModal').modal('show');
+    }
   });
   $('body').on('click','#save-button-confirm',function(){
     var id = $(this).data('id');
@@ -86,32 +114,11 @@ $(document).ready(function(){
     $('#confirmModal').modal('hide');
   });
 
-  var timer = setInterval(function(){
-    loadEvents(params);
-  },60000);
+  // var timer = setInterval(function(){
+  //   loadEvents(params);
+  // },10000);
 });
 //funciones
 function loadEvents(params){
-  if($('#events').length >0 ){
-    $.ajax({
-        url : 'get_events',
-        data : params,
-        type : 'GET',
-        dataType : 'json',
-        success : function(json) {
-          var template = _.template(
-            $('#template-events').html()
-            );
-          $('#events').html(
-            template({ listItems: json})
-          );
-        },
-        error : function(xhr, status) {
-            console.log('Error en conexion');
-        },
-        complete : function(xhr, status) {
-
-        }
-    });
-  }
+  _table.ajax.reload();
 }

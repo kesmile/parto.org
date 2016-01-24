@@ -17,3 +17,11 @@
 //= require underscore/underscore
 //= require moment/min/moment.min
 //= require eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
+//= require datatables.net/js/jquery.dataTables.min
+//= require datatables.net-bs/js/dataTables.bootstrap.min
+//= require datatables.net-buttons/js/dataTables.buttons.min
+//= require datatables.net-buttons-bs/js/buttons.bootstrap.min
+//= require datatables.net-buttons/js/buttons.colVis.min
+//= require datatables.net-buttons/js/buttons.flash.min
+//= require datatables.net-buttons/js/buttons.html5.min
+//= require datatables.net-buttons/js/buttons.print.min

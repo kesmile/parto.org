@@ -19,15 +19,25 @@ class DashboardController < ApplicationController
     @eventos = []
 
     @e.each do |e|
-      obj = {:tipo => e.tipo,:status => e.status, :usuario => e.usuario,
+      tipo = ''
+      if e.tipo == 'hemorragia-mucha-sangre'
+        tipo = 'Hemorragia mucha sangre!!'
+      elsif e.tipo == 'hemorragia-necesito-ayuda'
+        tipo = 'Hemorragia necesito ayuda!!'
+      elseif e.tipo == 'hemorragia-placenta'
+        tipo = 'Hemorragia placenta no sale!!'
+      else
+        tipo = e.tipo
+      end
+      obj = {:id=> e.id, :tipo => tipo,:status => e.status, :usuario => e.usuario,
              :telefono => e.telefono,:fecha => e.fecha.strftime("%D - %H:%M:%S"), :updated_at => e.updated_at.strftime("%D - %H:%M:%S")}
       @eventos.push(obj);
     end
-    render :json => @eventos
+    render :json => {:data => @eventos}
   end
   def set_event
     if params[:id] != ''
-      Evento.find_by_id(params[:id]).update_attribute(:status, false)
+      Evento.find_by_id(params[:id]).update_attribute(:status, false).update_attribute(:fecha_gestion, DateTime.now)
     end
     render :json => msj = { :status => true, :message => 'ok'}
   end

@@ -36,3 +36,16 @@
 @keyframes blinker {
   50% { opacity: 0.0; }
 }
+.dataTables_info, .dataTables_paginate, .dataTables_filter, .dt-buttons {
+  width: 50%;
+  float: left;
+}
+.dataTables_filter, .dt-buttons{
+  margin-bottom: 2%;
+}
+.dataTables_filter,.dataTables_paginate{
+  text-align: right;
+  ul{
+    margin-top: 0;
+  }
+}

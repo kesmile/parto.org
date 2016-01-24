@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(version: 20160106150131) do
     t.datetime "fecha"
     t.boolean  "status"
     t.string   "categoria"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "fecha_gestion"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade do |t|

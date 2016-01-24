@@ -13,4 +13,6 @@
  *= require_tree .
  *= require_self
  *= require bootstrap/dist/css/bootstrap
+ *= require datatables.net-bs/css/dataTables.bootstrap.min
+ *= require datatables.net-buttons-bs/css/buttons.bootstrap.min
  */
