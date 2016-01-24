@@ -37,7 +37,7 @@ class DashboardController < ApplicationController
   end
   def set_event
     if params[:id] != ''
-      Evento.find_by_id(params[:id]).update_attribute(:status, false).update_attribute(:fecha_gestion, DateTime.now)
+      Evento.find_by_id(params[:id]).update(:status => false, :fecha_gestion => DateTime.now)
     end
     render :json => msj = { :status => true, :message => 'ok'}
   end

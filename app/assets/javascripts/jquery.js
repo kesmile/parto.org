@@ -114,9 +114,9 @@ $(document).ready(function(){
     $('#confirmModal').modal('hide');
   });
 
-  // var timer = setInterval(function(){
-  //   loadEvents(params);
-  // },10000);
+  var timer = setInterval(function(){
+    loadEvents(params);
+  },10000);
 });
 //funciones
 function loadEvents(params){
