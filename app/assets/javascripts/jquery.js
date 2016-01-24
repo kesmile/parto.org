@@ -69,7 +69,7 @@ $(document).ready(function(){
         {data: 'telefono'},
         {data: 'tipo'},
         {data: 'fecha'},
-        {data: 'updated_at'},
+        {data: 'fecha_gestion'},
         { data: null,
           width: '5%',
           render: function(data, type, row){

@@ -7,20 +7,26 @@ class LoginController < ApplicationController
     render :layout => 'login'
   end
   def register
-    if session[:user_id] != nil
-      redirect_to controller: 'dashboard', action: 'index'
-      return
-    end
+    # if session[:user_id] != nil
+    #   redirect_to controller: 'dashboard', action: 'index'
+    #   return
+    # end
     render :layout => 'login'
   end
   def validate_register
     if request.post?
        if params[:username] != '' && params[:password] != '' && params[:categoria] != ''
-         @user = User.create(user: params[:username], email: params[:email], password: params[:password],
-                     status: true, categoria: params[:categoria]);
-         session[:user_id] = @user.id
-         session[:categoria] = @user.categoria
-         redirect_to controller: 'dashboard', action: 'index'
+         @u = User.find_by user: params[:username]
+         if @u == nil
+           @user = User.create(user: params[:username], email: params[:email], password: params[:password],
+                       status: true, categoria: params[:categoria]);
+           session[:user_id] = @user.id
+           session[:categoria] = @user.categoria
+           redirect_to controller: 'dashboard', action: 'index'
+         else
+           flash[:notice] = 'El usuario ya existe'
+           redirect_to controller: 'login', action: 'register'
+         end
        else
          flash[:notice] = 'Campos vacios'
          redirect_to controller: 'login', action: 'register'
