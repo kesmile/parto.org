@@ -1,18 +1,26 @@
 class DashboardController < ApplicationController
   require 'securerandom'
   def lista
-    @comadronas = Comadrona.where(:categoria => session[:categoria]);
+    @username = session[:username]
+    if session[:username] == 'ciesar'
+      @comadronas = Comadrona.all;
+    else
+      @comadronas = Comadrona.where(:categoria => session[:categoria]);
+    end
     render :layout => 'dashboard'
   end
   def index
+    @username = session[:username]
     @s = session[:categoria];
     @eventos = Evento.all.order(id: :desc);
     render :layout => 'dashboard'
   end
   #metodos post y get
   def get_events
-    if params[:nombre] != nil
-      @e = Evento.where("categoria = ? and usuario LIKE ?", "#{session[:categoria]}", "%#{params[:nombre]}%").order(id: :desc);
+    isRoot = false
+    if session[:username] == 'ciesar'
+      @e = Evento.all.order(id: :desc);
+      isRoot = true
     else
       @e = Evento.where(:categoria => session[:categoria]).order(id: :desc);
     end
@@ -32,7 +40,10 @@ class DashboardController < ApplicationController
 
 
       obj = {:id=> e.id, :tipo => tipo,:status => e.status, :usuario => e.usuario,
-             :telefono => e.telefono,:fecha => e.fecha.strftime("%D - %H:%M:%S"), :fecha_gestion => e.fecha_gestion ? e.fecha_gestion.strftime("%D - %H:%M:%S") : ''}
+             :telefono => e.telefono,:fecha => e.fecha.strftime("%D - %H:%M:%S"),
+             :fecha_gestion => e.fecha_gestion ? e.fecha_gestion.strftime("%D - %H:%M:%S") : '',
+             :categoria => e.categoria
+             }
       @eventos.push(obj);
     end
     render :json => {:data => @eventos}

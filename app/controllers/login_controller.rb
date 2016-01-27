@@ -41,6 +41,7 @@ class LoginController < ApplicationController
            if @user.password == params[:password]
              session[:user_id] = @user.id
              session[:categoria] = @user.categoria
+             session[:username] = params[:username]
              redirect_to controller: 'dashboard', action: 'index'
            else
              flash[:notice] = 'Contraseña incorrecta!'

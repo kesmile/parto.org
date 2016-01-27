@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Parto.org | dashboard</title>
+  <title>Partomaya.org | dashboard</title>
   <%= stylesheet_link_tag 'bootswatch', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag 'dashboard', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <% if @username != 'ciesar' %>
+  <style media="screen">
+    .notroot{
+      display: none !important
+    }
+  </style>
+  <% end %>
 </head>
 <body>
   <div class="navbar navbar-default navbar-fixed-top">
@@ -16,15 +23,18 @@
             <a href="/" class="navbar-brand">PARTOMAYA.ORG</a>
           </div>
           <div class="navbar-collapse collapse" id="navbar-main">
+            <% if @username == 'ciesar' %>
             <ul class="nav navbar-nav">
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Opciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="themes">
-                  <li><a href="../default/">Default</a></li>
-                  <li class="divider"></li>
+                  <li>
+                    <%= link_to "Crear cuenta", :controller => :login, :action => :register %>
+                  </li>
                 </ul>
               </li>
             </ul>
+            <% end %>
             <ul class="nav navbar-nav navbar-right">
               <li>
                 <%= link_to action: "logout", controller: 'login' do %>
@@ -43,48 +53,6 @@
               <a class="list-group-item" href="/dashboard/index" ><i class="fa fa-bell-o"></i> Notificaciones</a>
               <a class="list-group-item" href="/dashboard/lista"><i class="fa fa-female"></i> Lista de Comadronas</a>
               <a class="list-group-item" href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Nueva comadrona</a>
-                <!-- <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">¿Que es parto.org?</a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <p>HTML stands for HyperText Markup Language. HTML is the main markup language for describing the structure of Web pages. <a href="http://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Comadronas</a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                  <ul>
-                                    <li>
-                                      <a href="#" data-toggle="modal" data-target="#myModal">Agregar nueva</a>
-                                      </li>
-                                  </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3. What is CSS?</a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <p>CSS stands for Cascading Style Sheet. CSS allows you to specify various style properties for a given HTML element such as colors, backgrounds, fonts etc. <a href="http://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn more.</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
           </div>
           <div class="col-xs-9">

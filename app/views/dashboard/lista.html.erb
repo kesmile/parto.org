@@ -6,6 +6,9 @@
       <th>#</th>
       <th>Nombre</th>
       <th>Direccion</th>
+      <% if @username == 'ciesar' %>
+      <th>Categoria</th>
+      <% end %>
       <th>Codigo</th>
       <th>Acciones</th>
     </tr>
@@ -16,6 +19,9 @@
         <td><%= index %></td>
         <td><%= c.nombre %></td>
         <td><%= c.direccion %></td>
+        <% if @username == 'ciesar' %>
+          <td><%= c.categoria %></td>
+        <% end %>
         <td><%= c.token %></td>
         <td><a href="#"><i class="fa fa-pencil"></i></a> <a href="#" ><i class="fa fa-trash-o"></i></a></td>
       </tr>

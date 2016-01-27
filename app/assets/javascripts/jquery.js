@@ -70,6 +70,10 @@ $(document).ready(function(){
         {data: 'tipo'},
         {data: 'fecha'},
         {data: 'fecha_gestion'},
+        {
+          data: 'categoria',
+          sClass: 'notroot'
+        },
         { data: null,
           width: '5%',
           render: function(data, type, row){
