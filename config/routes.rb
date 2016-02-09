@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'dashboard/lista'
   get 'dashboard/get_events'
   post 'dashboard/set_event'
+  delete 'dashboard/delete_event'
+  delete 'dashboard/delete_comadrona'
   post 'dashboard/add_comadrona'
   post 'dashboard/add_evento'
   get 'login/index'

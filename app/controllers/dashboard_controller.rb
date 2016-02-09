@@ -16,6 +16,18 @@ class DashboardController < ApplicationController
     render :layout => 'dashboard'
   end
   #metodos post y get
+  def delete_event
+    if params[:id]
+      @e = Evento.find(params[:id]).destroy
+    end
+    render :json => msj = { :status => true, :message => 'ok'}
+  end
+  def delete_comadrona
+    if params[:id]
+      @e = Comadrona.find(params[:id]).destroy
+    end
+    render :json => msj = { :status => true, :message => 'ok'}
+  end
   def get_events
     isRoot = false
     if session[:username] == 'ciesar'

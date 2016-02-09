@@ -6,7 +6,7 @@
   <%= stylesheet_link_tag 'dashboard', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <% if @username != 'ciesar' %>
   <style media="screen">
@@ -104,15 +104,232 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="confirmModal">Confirmacion</h4>
           </div>
-          <div class="modal-body">
-            ¿Deseas gestionar esta emergencia?
+          <div class="modal-body" id="modalMsj">
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-            <button id="save-button-confirm" data-id="" type="button" class="btn btn-primary">Guardar</button>
+            <button id="save-button-confirm" data-id="" type="button" class="btn btn-primary">Aceptar</button>
           </div>
         </div>
       </div>
     </div>
+    <div class="modal fade" id="deleteComadrona" tabindex="-1" role="dialog" aria-labelledby="confirmModal">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="confirmModal">Confirmacion</h4>
+          </div>
+          <div class="modal-body" id="modalMsj">
+            ¿Desea eliminar a esta comadrona?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button id="btn-confirm-comadrona" data-id="" type="button" class="btn btn-primary">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+    var params = {};
+    var _table = {};
+    $(document).ready(function(){
+      $.ajaxSetup({
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        }
+      });
+      $('#search').datetimepicker();
+      _.templateSettings = {
+          interpolate: /\{\{\=(.+?)\}\}/g,
+          evaluate: /\{\{(.+?)\}\}/g
+        };
+      $('body').on('click','#save-button',function(){
+        if($(this).data('status') == 'save'){
+          $.ajax({
+              url : 'add_comadrona',
+              data : $('#modalForm').serialize(),
+              type : 'POST',
+              dataType : 'json',
+              success : function(json) {
+                  $('#status-save-info').html(json.message);
+                  if(json.status == 'ok'){
+                    $('#status-save')
+                      .removeClass('alert-danger')
+                      .addClass('alert-info')
+                      .show();
+                      $('.input-dashboard').prop('disabled', true);
+                      $('#save-button').data('status','close').html('Aceptar');
+                  }else{
+                    $('#status-save')
+                      .removeClass('alert-info')
+                      .addClass('alert-danger')
+                      .show();
+                  }
+              },
+              error : function(xhr, status) {
+                  alert('Error en conexion');
+              },
+              complete : function(xhr, status) {
+
+              }
+          });
+        }else{
+          $('.input-dashboard').val('').prop('disabled', false);
+          $('#save-button').data('status','save').html('Guardar');
+          $('#status-save').hide();
+          $('#myModal').modal('hide');
+          location.reload();
+        }
+      });
+      _table = $('#datatable').DataTable({
+          dom: 'Bfrtip',
+          buttons: [
+              'copy', 'excel'
+          ],
+          ajax: 'get_events',
+          columns: [
+            { data: null,
+              render: function(data, type, row){
+                if(data['status'] == true){
+                  return "<span class='label label-danger blink_me'>Emergencia</span>";
+                }else{
+                  return "<span class='label label-success'>Gestionada</span>";
+                }
+              }
+            },
+            {data: 'usuario'},
+            {data: 'telefono'},
+            {data: 'tipo'},
+            {data: 'fecha'},
+            {data: 'fecha_gestion'},
+            {
+              data: 'categoria',
+              sClass: 'notroot'
+            },
+            { data: null,
+              width: '10%',
+              render: function(data, type, row){
+                if(data['status'] == true){
+                  return '<input data-id="'+ data['id']+'" class="change-status" type="checkbox">'+
+                          '<a href="#" class="notroot delete" data-id="'+ data['id'] +'" ><i class="fa fa-trash-o"></i></a>';
+                }else{
+                  return '<input type="checkbox" disabled checked>'+
+                          '<a href="#" class="notroot delete" data-id="'+ data['id'] +'" ><i class="fa fa-trash-o"></i></a>';
+                }
+              }
+            }
+          ]
+
+        });
+      //otro evento
+      $('body').on('click','.delete',function(e){
+          $('#save-button-confirm').data('id',$(this).data('id'))
+                                .data('action','delete');
+          $('#modalMsj').html('¿Desea eliminar esta gestion?');
+          $('#confirmModal').modal('show');
+          e.preventDefault();
+      });
+      //eventos
+      $('body').on('change','.change-status',function(){
+        if($(this).is(":checked")){
+          $('#save-button-confirm').data('id',$(this).data('id'))
+                                  .data('action','save');
+          $('#modalMsj').html('¿Deseas gestionar esta emergencia?');
+          $('#confirmModal').modal('show');
+        }
+      });
+
+      $('body').on('click','.delete-comadrona',function(e){
+          $('#btn-confirm-comadrona').data('id',$(this).data('id'));
+          $('#deleteComadrona').modal('show');
+          e.preventDefault();
+      });
+
+      $('body').on('click','#save-button-confirm',function(){
+        var id = $(this).data('id');
+        var action = $(this).data('action');
+
+        if(action == 'save'){
+          $.ajax({
+              url : 'set_event',
+              data : {id: id},
+              type : 'POST',
+              dataType : 'json',
+              success : function(json) {
+                if(json.status != true){
+                  console.log('Error en conexion');
+                }else{
+                  loadEvents()
+                }
+              },
+              error : function(xhr, status) {
+                  console.log('Error en conexion');
+              },
+              complete : function(xhr, status) {
+
+              }
+          });
+        }else if (action == 'delete') {
+          $.ajax({
+              url : 'delete_event',
+              data : {id: id},
+              type : 'DELETE',
+              dataType : 'json',
+              success : function(json) {
+                if(json.status != true){
+                  console.log('Error en conexion');
+                }else{
+                  loadEvents();
+                }
+              },
+              error : function(xhr, status) {
+                  console.log('Error en conexion');
+              },
+              complete : function(xhr, status) {
+
+              }
+          });
+        }
+
+        $('#confirmModal').modal('hide');
+      });
+
+      $('body').on('click','#btn-confirm-comadrona',function(){
+        var id = $(this).data('id');
+          $.ajax({
+              url : 'delete_comadrona',
+              data : {id: id},
+              type : 'DELETE',
+              dataType : 'json',
+              success : function(json) {
+                if(json.status != true){
+                  console.log('Error en conexion');
+                }else{
+                  location.reload();
+                }
+              },
+              error : function(xhr, status) {
+                  console.log('Error en conexion');
+              },
+              complete : function(xhr, status) {
+
+              }
+          });
+        $('#deleteComadrona').modal('hide');
+      });
+
+
+      var timer = setInterval(function(){
+        loadEvents(params);
+      },10000);
+    });
+    //funciones
+    function loadEvents(params){
+      _table.ajax.reload();
+    }
+
+    </script>
 </body>
 </html>
